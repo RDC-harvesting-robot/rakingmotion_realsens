@@ -1,0 +1,77 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Splitter Ratio: 0.5
+    Tree Height: 639
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View Bounding Box1
+    Name: Views
+    Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/Camera
+      Camera Info Topic: /camera/camera/color/camera_info  # 修正点
+      Enabled: true
+      Image Topic: /camera/camera/color/image_raw      # 修正点
+      Name: Camera
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/PointStamped
+      Color: 255; 0; 255
+      Enabled: true
+      History Length: 1
+      Name: PointStamped
+      Radius: 0.05
+      Topic:
+        Value: /closest_point
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Marker Topic: /far_point_marker
+      Name: Marker
+      Namespaces:
+        far_point: true
+      Queue Size: 100
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: camera_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Camera
+      Name: Camera
+      Target Frame: <Fixed Frame>
+      Value: Camera
+    Saved: ~

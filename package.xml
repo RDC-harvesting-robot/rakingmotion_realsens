@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>rakingmotion_realsens</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="n.hayato4274@gmail.com">nomura</maintainer>
+  <license>TODO: License declaration</license>
+
+  <!-- build tools -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- build dependencies -->
+  <build_depend>rosidl_default_generators</build_depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_geometry</build_depend>
+  <build_depend>message_filters</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+  <build_depend>rosidl_typesupport_c</build_depend>
+
+  <!-- run dependencies -->
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>image_geometry</exec_depend>
+  <exec_depend>message_filters</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>rosidl_typesupport_c</exec_depend>
+
+  <!-- OpenCV（使ってる場合） -->
+  <build_depend>opencv4</build_depend>
+  <exec_depend>opencv4</exec_depend>
+
+  <!-- オプション: 可視化に使っている場合 -->
+  <depend>visualization_msgs</depend>
+
+  <!-- テスト -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <!-- rosidlインターフェース定義グループ -->
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
