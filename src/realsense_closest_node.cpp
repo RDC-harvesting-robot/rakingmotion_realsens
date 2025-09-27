@@ -62,10 +62,10 @@ private:
     depth_mat.convertTo(depth_m, CV_32F, depth_scale_);
 
     // ★ 修正：深度マスク範囲を絞る（0.3〜0.8m）
-    cv::Mat mask = (depth_m > 0.3) & (depth_m < 0.8);
+    cv::Mat mask = (depth_m > 0.2) & (depth_m < 0.8);
 
     // デバッグ：マスク確認
-    cv::imshow("Mask", mask * 255);
+    //cv::imshow("Mask", mask * 255);
 
     cv::Mat filtered_depth = cv::Mat::zeros(depth_m.size(), CV_32F);
     depth_m.copyTo(filtered_depth, mask);
@@ -96,13 +96,18 @@ private:
       double area = cv::contourArea(contour);
 
       // ★ 修正：最小面積を増やす
-      if (area < 1500) continue;
+      if (area < 4000) continue;
 
       cv::Moments M = cv::moments(contour);
       if (M.m00 == 0) continue;
       int cx = int(M.m10 / M.m00);
       int cy = int(M.m01 / M.m00);
 
+      int image_center_x = color_mat.cols / 2;
+      int image_center_y = color_mat.rows / 2;
+      int center_margin = 100; // 中心から±100ピクセル以内
+      if (std::abs(cx - image_center_x) > center_margin || std::abs(cy - image_center_y) > center_margin) continue;
+    
       float depth_val = depth_m.at<float>(cy, cx);
       if (depth_val <= 0.0f || std::isnan(depth_val)) continue;
 
@@ -139,6 +144,27 @@ private:
       publishPointsAndShow();
       published_ = true;
     }
+        // 毎フレーム可視化する
+    cv::Mat vis_frame = color_mat.clone();
+    for (const auto& contour : contours) {
+      cv::drawContours(vis_frame, std::vector<std::vector<cv::Point>>{contour}, -1, cv::Scalar(0, 255, 0), 1);
+      cv::Moments M = cv::moments(contour);
+      if (M.m00 != 0) {
+        int cx = int(M.m10 / M.m00);
+        int cy = int(M.m01 / M.m00);
+        cv::circle(vis_frame, cv::Point(cx, cy), 3, cv::Scalar(0, 0, 255), -1);
+      }
+    }
+
+    // 中心線の表示（参考用）
+    int img_center_x = vis_frame.cols / 2;
+    int img_center_y = vis_frame.rows / 2;
+    cv::line(vis_frame, cv::Point(img_center_x, 0), cv::Point(img_center_x, vis_frame.rows - 1), cv::Scalar(255, 0, 0), 1);
+    cv::line(vis_frame, cv::Point(0, img_center_y), cv::Point(vis_frame.cols - 1, img_center_y), cv::Scalar(255, 0, 0), 1);
+
+    // 表示
+    cv::imshow("Processing", vis_frame);
+
 
     cv::waitKey(1);  // デバッグ表示維持
   }
