@@ -144,6 +144,14 @@ private:
       publishPointsAndShow();
       published_ = true;
     }
+
+        RCLCPP_INFO(
+            this->get_logger(),
+            "DEBUG INFO: sec, published=%s, best_depth=%.3f, max_depth=%.3e",
+            published_ ? "true" : "false",
+            best_depth_,
+            std::numeric_limits<float>::max()
+        );
         // 毎フレーム可視化する
     cv::Mat vis_frame = color_mat.clone();
     for (const auto& contour : contours) {

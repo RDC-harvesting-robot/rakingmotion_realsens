@@ -1,5 +1,8 @@
 import os
 from ament_index_python.packages import get_package_share_directory
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -21,15 +24,25 @@ def generate_launch_description():
    # rviz_config_path = os.path.join(pkg_share, 'config', 'raking_view.rviz')
 
     # 1. RealSenseノードの起動
-    realsense_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(realsense_launch_path)
+    # realsense_node = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(realsense_launch_path)
+    # )
+
+    realsense_node = Node(
+        package='realsense2_camera',
+        namespace='/devices/ee_camera',  # 名前空間指定
+        name='realsense_node',
+        executable='realsense2_camera_node',
+        parameters=[PathJoinSubstitution([FindPackageShare('rakingmotion_realsens'), 'config', 'realsense.yaml'])],
+        emulate_tty=True,
+        output='screen',
     )
 
     # 2. 自作ノードの起動
     raking_motion_node = Node(
         package='rakingmotion_realsens',
-        executable='realsense_closest_node',
-        name='realsense_closest_node',
+        executable='realsensetopic_closest_node',
+        name='realsensetopic_closest_node',
         output='screen'
         # トピック名がコードと異なる場合は、ここでリマッピングも可能
         # remappings=[
